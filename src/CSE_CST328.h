@@ -9,11 +9,11 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 16:37:41 PM 16-02-2025, Sunday
+  Last Modified: +05:30 21:11:18 PM 16-02-2025, Sunday
  */
 //============================================================================================//
 
-#ifndef CSE_CST328_H
+#ifndef CSE_CST328_H // CSE_CST328_LIBRARY
 #define CSE_CST328_H
 
 #include "Arduino.h"
@@ -24,7 +24,7 @@
 
 //============================================================================================//
 /*!
-  @brief  Helper class that stores a TouchScreen Point with x, y, and z
+  @brief  Helper class that stores a touch screen point with x, y, and z
   coordinates, for easy math/comparison.
 */
 class TS_Point {
@@ -32,62 +32,59 @@ class TS_Point {
     TS_Point (void);
     TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id);
 
+    // Comparison operators.
     bool operator== (TS_Point);
     bool operator!= (TS_Point);
 
+    // In touch panels that have multi-touch support, the touch ID can be used
+    // to identify the touch point.
+    // CST328 supports up to 5 touch points.
     uint8_t touchId;
+    
     int16_t x; // X coordinate
     int16_t y; // Y coordinate
     int16_t z; // Z coordinate (often used for pressure)
-    int16_t state; // State
+    int16_t state; // State (touched or not touched)
 };
 
 //============================================================================================//
 /*!
-  @brief  Class that stores state and functions for interacting with FT6206
-  capacitive touch chips.
+  @brief  Class that stores state and functions for interacting with the CST328
+  capacitive touch controller.
 */
 class CSE_CST328 {
   public:
-    // These values are common to both P1 and P2 touch points
-    // uint8_t touches;  // Number of touches registered
-    // uint8_t gestureID;  // The gesture ID of the touch
     uint16_t defWidth, defHeight; // Default width and height of the touch screen
     uint16_t width, height; // The size of the touch screen
-
-    // FT6206 can detect two touch points, P1 and P2 at the same time.
-    // So have two sets of values for each point.
-    // uint8_t touchEvent [2];  // The type of touch
-    // uint16_t touchX [2], touchY [2];
-    // uint16_t touchID [2];
-    // uint8_t touchArea [2];
-    // uint8_t touchWeight [2];
-
-    TS_Point touchPoints [5];
     uint8_t rotation;
 
+    TS_Point touchPoints [5];
+
     CSE_CST328 (uint16_t width, uint16_t height, TwoWire *i2c = &Wire, int8_t pinRst = -1, int8_t pinIrq = -1);
+    
     bool begin();
     void readData (void);
     uint8_t getTouches (void);  // Returns the number of touches detected
     bool isTouched (void); // Returns true if there are any touches detected
-    TS_Point getPoint (uint8_t n = 0);  // By default, P1 touch point is returned
-    uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3
-    uint8_t getRotation();  // Set the rotation of the touch panel (0-3
+    TS_Point getPoint (uint8_t n = 0);  // By default, first touch point is returned
+    uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3)
+    uint8_t getRotation();  // Set the rotation of the touch panel (0-3)
     uint16_t getWidth();
     uint16_t getHeight();
-
-    void writeRegister8 (uint16_t reg, uint8_t val); // Write an 8 bit value to a register
-    uint8_t readRegister8 (uint16_t reg);  // Read an 8 bit value from a register
-    uint32_t readRegister32 (uint16_t reg);  // Read a 16 bit value from a register
-    void write16 (uint16_t reg);
-
-  private:
+    
+    private:
     TwoWire *wireInstance; // Touch panel I2C
     int8_t pinReset;  // Touch panel reset pin
-    int8_t pinInterrupt;  // Touch panel reset pin
+    int8_t pinInterrupt;  // Touch panel interrupt pin
+    bool inited;
+
+    // In CST328, all register addresses are 16 bits.
+    void writeRegister8 (uint16_t reg, uint8_t val); // Write an 8 bit value to a register
+    uint8_t readRegister8 (uint16_t reg);  // Read an 8 bit value from a register
+    uint32_t readRegister32 (uint16_t reg);  // Read a 32 bit value from the registers
+    void write16 (uint16_t reg);  // Write a 16 bit value to the registers. No values required.
 };
 
 //============================================================================================//
 
-#endif // CSE_FT6206_LIBRARY
+#endif // CSE_CST328_LIBRARY
