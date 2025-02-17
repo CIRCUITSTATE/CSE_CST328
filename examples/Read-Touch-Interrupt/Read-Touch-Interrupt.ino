@@ -2,11 +2,10 @@
 
 //============================================================================================//
 /*
-  Filename: Fast-Read-Touch-Polling.ino
+  Filename: Read-Touch-Interrupt.ino
   Description: Example Arduino sketch from the CSE_CST328 Arduino library.
-  Reads the touch sensor through polling method and prints the data to the serial monitor.
-  This reads only one touch point at a time and therefore is faster than the `Read-Touch-Polling.ino`
-  example. This code was written for and tested with FireBeetle-ESP32E board.
+  Reads the touch sensor through interrupt method and prints the data to the serial monitor.
+  This code was written for and tested with FireBeetle-ESP32E board.
   
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
@@ -14,7 +13,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:47:00 PM 17-02-2025, Monday
+  Last Modified: +05:30 23:28:57 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -31,6 +30,8 @@
 // Create a new instance of the CST328 class.
 // Parameters: Width, Height, &Wire, Reset pin, Interrupt pin
 CSE_CST328 tsPanel = CSE_CST328 (240, 320, &Wire, CST328_PIN_RST, CST328_PIN_INT);
+
+bool intReceived = false; // Flag to indicate that an interrupt has been received
 
 //===================================================================================//
 /**
@@ -49,6 +50,10 @@ void setup() {
 
   // Initialize the touch panel.
   tsPanel.begin();
+
+  // Attach the interrupt function.
+  attachInterrupt (digitalPinToInterrupt (CST328_PIN_INT), touchISR, FALLING);
+
   delay (100);
 }
 
@@ -58,8 +63,11 @@ void setup() {
  * 
  */
 void loop() {
-  readTouch();
-  delay (100);
+  if (intReceived) {
+    readTouch();
+    intReceived = false;
+    attachInterrupt (digitalPinToInterrupt (CST328_PIN_INT), touchISR, FALLING);
+  }
 }
 
 //===================================================================================//
@@ -85,6 +93,17 @@ void readTouch() {
   else {
     Serial.println ("No touches detected");
   }
+}
+
+//===================================================================================//
+/**
+ * @brief The touch interrupt service routine.
+ * 
+ */
+void touchISR() {
+  // Detach the interrupt to prevent multiple interrupts
+  detachInterrupt (digitalPinToInterrupt (CST328_PIN_INT));
+  intReceived = true;
 }
 
 //===================================================================================//

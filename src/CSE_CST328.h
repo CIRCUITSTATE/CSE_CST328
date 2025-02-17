@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:26:27 PM 17-02-2025, Monday
+  Last Modified: +05:30 20:44:09 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -67,7 +67,7 @@ class CSE_CST328 {
     void fastReadData (uint8_t n = 0); // Reads only one touch point data at a time
     uint8_t getTouches();  // Returns the number of touches detected
     bool isTouched(); // Returns true if there are any touches detected
-    bool isTouched (uint8_t id = 0); // Returns true if there are any touches detected
+    bool isTouched (uint8_t id); // Returns true if there are any touches detected
     TS_Point getPoint (uint8_t n = 0);  // By default, first touch point is returned
     uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3)
     uint8_t getRotation();  // Set the rotation of the touch panel (0-3)

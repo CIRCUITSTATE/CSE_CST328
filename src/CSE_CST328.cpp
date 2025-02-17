@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:27:00 PM 17-02-2025, Monday
+  Last Modified: +05:30 22:46:32 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -130,6 +130,10 @@ bool CSE_CST328:: begin() {
     delay (10);
     digitalWrite (pinReset, HIGH);
     delay (100); // Wait for chip to initialize (TRON = 200ms from datasheet)
+  }
+
+  if (pinInterrupt != -1) {
+    pinMode (pinInterrupt, INPUT_PULLUP);
   }
 
   // The chip can take a few tries to read the info.

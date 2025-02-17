@@ -30,6 +30,7 @@ This library does not depend on any other libraries other than the standard Ardu
 Find the examples in the [examples](examples) folder.
 
   - [**Read-Touch-Polling**](examples/Read-Touch-Polling/Read-Touch-Polling.ino)
+  - [**Fast-Read-Touch-Polling**](examples/Fast-Read-Touch-Polling/Fast-Read-Touch-Polling.ino)
   - [**Read-Touch-Interrupt**](examples/Read-Touch-Interrupt/Read-Touch-Interrupt.ino)
 
 ## API Reference

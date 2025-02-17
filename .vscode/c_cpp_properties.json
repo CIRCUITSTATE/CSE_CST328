@@ -12,7 +12,7 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "D:\\Code\\Arduino\\libraries\\CSE_CST328\\examples\\Read-Touch-Polling\\Test",
+                "D:\\Code\\Arduino\\libraries\\CSE_CST328\\examples\\Read-Touch-Interrupt",
                 "C:\\Users\\vishn\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.1-632e0c2a\\esp32\\dio_qspi\\include",
                 "C:\\Users\\vishn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.7\\cores\\esp32",
                 "C:\\Users\\vishn\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.7\\variants\\doitESP32devkitV1",

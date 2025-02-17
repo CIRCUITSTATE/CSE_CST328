@@ -1,6 +1,13 @@
 
 
 #
+### **+05:30 11:29:05 PM 17-02-2025, Monday**
+
+  - Added new `Read-Touch-Interrupt.ino` example.
+    - Tested and working.
+  - Updated Readme.
+
+#
 ### **+05:30 07:37:25 PM 17-02-2025, Monday**
 
   - Added `Fast-Read-Touch-Polling` example.
