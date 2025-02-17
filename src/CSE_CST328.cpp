@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 21:11:52 PM 16-02-2025, Sunday
+  Last Modified: +05:30 22:39:42 PM 16-02-2025, Sunday
  */
 //============================================================================================//
 
@@ -213,30 +213,30 @@ void CSE_CST328:: readData() {
   }
   
   // // Apply rotation if necessary
-  // for (uint8_t i = 0; i < 2; i++) {
-  //   switch (rotation) {
-  //     case 0: // Default orientation
-  //       break;
-  //     case 1: // 90 degrees clockwise
-  //       {
-  //         int16_t temp = touchY[i];
-  //         touchY[i] = width - touchX[i] - 1;
-  //         touchX[i] = temp;
-  //       }
-  //       break;
-  //     case 2: // 180 degrees
-  //       touchX[i] = width - touchX[i] - 1;
-  //       touchY[i] = height - touchY[i] - 1;
-  //       break;
-  //     case 3: // 270 degrees clockwise
-  //       {
-  //         int16_t temp = touchY[i];
-  //         touchY[i] = touchX[i];
-  //         touchX[i] = height - temp - 1;
-  //       }
-  //       break;
-  //   }
-  // }
+  for (uint8_t i = 0; i < 5; i++) {
+    switch (rotation) {
+      case 0: // Default orientation
+        break;
+      case 1: // 90 degrees clockwise
+        {
+          int16_t temp = touchPoints [i].y;
+          touchPoints [i].y = width - touchPoints [i].x - 1;
+          touchPoints [i].x = temp;
+        }
+        break;
+      case 2: // 180 degrees
+        touchPoints [i].x = width - touchPoints [i].x - 1;
+        touchPoints [i].y = height - touchPoints [i].y - 1;
+        break;
+      case 3: // 270 degrees clockwise
+        {
+          int16_t temp = touchPoints [i].y;
+          touchPoints [i].y = touchPoints [i].x;
+          touchPoints [i].x = height - temp - 1;
+        }
+        break;
+    }
+  }
 }
 
 //============================================================================================//

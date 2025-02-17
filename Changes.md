@@ -1,6 +1,17 @@
 
 
 #
+### **+05:30 06:18:01 PM 17-02-2025, Monday**
+
+  - Updated `Read-Touch-Polling` example.
+    - Removed unnecessary code.
+    - Added more documentation.
+  - Added `Test` example for internal testing.
+  - Updated Readme.
+    - Added Adafruit FT6206 library link.
+    - Added links to PlatformIO.
+
+#
 ### **+05:30 09:11:26 PM 16-02-2025, Sunday**
 
   - Added Arduino library specification files.

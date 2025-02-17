@@ -3,7 +3,7 @@
 
 # CSE_CST328
 
-**CSE_CST328** is an Arduino library from [*CIRCUITSTATE Electronics*](https://www.circuitstate.com/). It helps you interface the [**CST328**](https://www.cdtech-display.com/wp-content/uploads/2024/07/CST328-DataSheet-V2.2.pdf) touch controller with your Arduino boards. CST328 can be bought as a standalone touch panel or come integrated with LCD screen like the [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD). The library uses I2C to communicate with the CST328.
+**CSE_CST328** is an Arduino library from [*CIRCUITSTATE Electronics*](https://www.circuitstate.com/). It helps you interface the [**CST328**](https://www.cdtech-display.com/wp-content/uploads/2024/07/CST328-DataSheet-V2.2.pdf) touch controller with your Arduino boards. CST328 can be bought as a standalone touch panel or come integrated with LCD screens like the [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD). The library uses I2C to communicate with the CST328.
 
 ## Installation
 
@@ -19,7 +19,7 @@ git clone https://github.com/CIRCUITSTATE/CSE_CST328.git
 
 [**Git**](https://git-scm.com) should be installed on your computer.
 
-The library can also be installed via **PlatformIO**. All officially listed Arduino listed libraries are automatically fetched by PlatformIO. Use the `lib_deps` search option to install the library.
+The library can also be installed via [**PlatformIO**](https://platformio.org). All officially listed Arduino listed libraries are automatically fetched by PlatformIO. Use the [`lib_deps`](https://docs.platformio.org/en/latest/projectconf/sections/env/options/library/lib_deps.html) search option to install the library.
 
 ## Dependencies
 
@@ -39,3 +39,5 @@ Please see the [API.md](/docs/API.md) file for the API reference.
 ## References
 
 -  [**CSE_UI - CIRCUITSTATE GitHub**](https://github.com/CIRCUITSTATE/CSE_UI) - An Arduino GUI library for common TFT/IPS screens.
+-  [**Adafruit_FT6206 Library**](https://github.com/adafruit/Adafruit_FT6206_Library) - Where this library took inspiration from.
+-  [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD)
