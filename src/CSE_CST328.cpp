@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 22:39:42 PM 16-02-2025, Sunday
+  Last Modified: +05:30 19:27:00 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -241,16 +241,152 @@ void CSE_CST328:: readData() {
 
 //============================================================================================//
 /**
- * @brief Get the number of touches detected
+ * @brief Reads a single touch point data from the controller. This is faster than `readData()`.
  * 
- * @return uint8_t Number of touches (0-5)
+ * @param id Touch or finger ID (0-4).
+ */
+void CSE_CST328:: fastReadData (uint8_t id) {
+  uint8_t data [5]; // Buffer for data for one finger.
+  
+  switch (id) {
+    case 0: // Finger 1 (id 0)
+    default: // Default to finger 1
+      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+      wireInstance->write (0xD0); // Register address for first finger.
+      wireInstance->write (0x00);
+      wireInstance->endTransmission (false);
+
+      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+
+      for (int i = 0; i < 5; i++) {
+        if (wireInstance->available()) {
+          data [i] = wireInstance->read();
+        }
+        else {
+          break;
+        }
+      }
+      break;
+
+    case 1:
+      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+      wireInstance->write (0xD0); // Register address for second finger.
+      wireInstance->write (0x07);
+      wireInstance->endTransmission (false);
+
+      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+
+      for (int i = 0; i < 5; i++) {
+        if (wireInstance->available()) {
+          data [i] = wireInstance->read();
+        }
+        else {
+          break;
+        }
+      }
+      break;
+
+    case 2:
+      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+      wireInstance->write (0xD0); // Register address for third finger.
+      wireInstance->write (0x0C);
+      wireInstance->endTransmission (false);
+
+      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+
+      for (int i = 0; i < 5; i++) {
+        if (wireInstance->available()) {
+          data [i] = wireInstance->read();
+        }
+        else {
+          break;
+        }
+      }
+      break;
+
+    case 3:
+      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+      wireInstance->write (0xD0); // Register address for fourth finger.
+      wireInstance->write (0x11);
+      wireInstance->endTransmission (false);
+
+      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+
+      for (int i = 0; i < 5; i++) {
+        if (wireInstance->available()) {
+          data [i] = wireInstance->read();
+        }
+        else {
+          break;
+        }
+      }
+      break;
+
+    case 4:
+      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+      wireInstance->write (0xD0); // Register address for fifth finger.
+      wireInstance->write (0x16);
+      wireInstance->endTransmission (false);
+
+      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+
+      for (int i = 0; i < 5; i++) {
+        if (wireInstance->available()) {
+          data [i] = wireInstance->read();
+        }
+        else {
+          break;
+        }
+      }
+      break;
+  }
+  
+  touchPoints [id].state = ((data [0] & 0x0F) == 6) ? 1 : 0;
+  touchPoints [id].x = (data [1] << 4) | ((data [3] >> 4) & 0x0F); // Calculate X coordinate (combining high and low bits)
+  touchPoints [id].y = (data [2] << 4) | (data [3] & 0x0F); // Calculate Y coordinate (combining high and low bits)
+  touchPoints [id].z = data [4]; // Touch weight/pressure
+  
+  // Apply rotation if necessary.
+  switch (rotation) {
+    case 0: // Default orientation
+      break;
+
+    case 1: // 90 degrees clockwise
+      {
+        int16_t temp = touchPoints [id].y;
+        touchPoints [id].y = width - touchPoints [id].x - 1;
+        touchPoints [id].x = temp;
+      }
+      break;
+
+    case 2: // 180 degrees
+      touchPoints [id].x = width - touchPoints [id].x - 1;
+      touchPoints [id].y = height - touchPoints [id].y - 1;
+      break;
+      
+    case 3: // 270 degrees clockwise
+      {
+        int16_t temp = touchPoints [id].y;
+        touchPoints [id].y = touchPoints [id].x;
+        touchPoints [id].x = height - temp - 1;
+      }
+      break;
+  }
+}
+
+//============================================================================================//
+/**
+ * @brief Get the number of touches detected. This will read all touch data from the controller.
+ * Lifted touch data is not ignored.
+ * 
+ * @return `uint8_t` Number of active touches (0-5 for CST328).
  */
 uint8_t CSE_CST328:: getTouches() {
-  readData();
-
+  readData(); // Read all data.
+  
   uint8_t touches = 0;
 
-  for (uint8_t i = 0; i < 5; i++) {
+  for (uint8_t i = 0; i < 5; i++) { // Finc the number of active touches.
     if (touchPoints [i].state == 1) {
       touches++;
     }
@@ -261,7 +397,24 @@ uint8_t CSE_CST328:: getTouches() {
 
 //============================================================================================//
 /**
- * @brief Check if the screen is being touched.
+ * @brief Checks if the finger id is being touched right now.
+ * 
+ * @param id The id of the finger.
+ * @return `bool` True if touched, false if not.
+ */
+bool CSE_CST328:: isTouched (uint8_t id) {
+  fastReadData (id);  // Read the single touch point as fast as possible.
+  
+  if (touchPoints [id].state == 1) { // Check if the point is touched.
+    return true;
+  }
+
+  return false;
+}
+
+//============================================================================================//
+/**
+ * @brief Check if the screen is being touched by checking all touch points.
  * @returns  True if touched, false if not.
  */
 bool CSE_CST328:: isTouched() {

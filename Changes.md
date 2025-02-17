@@ -1,6 +1,17 @@
 
 
 #
+### **+05:30 07:37:25 PM 17-02-2025, Monday**
+
+  - Added `Fast-Read-Touch-Polling` example.
+    - This now uses the `fastReadData()` to read a single touch point data.
+  - Added `fastReadData()` function.
+    - This is faster than `readData()`.
+  - Added `isTouched (uint8_t id = 0)` overload.
+    - This will only check for the provided touch point for activity.
+    - If no parameters are passed, all touch points are checked.
+
+#
 ### **+05:30 06:18:01 PM 17-02-2025, Monday**
 
   - Updated `Read-Touch-Polling` example.

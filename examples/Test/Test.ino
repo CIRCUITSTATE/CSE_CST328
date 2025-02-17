@@ -10,7 +10,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 18:18:54 PM 17-02-2025, Monday
+  Last Modified: +05:30 19:37:15 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -24,9 +24,8 @@
 
 //===================================================================================//
 
-// Create a new instance of the CST328 class and send the Wire instance,
-// and the reset pin to the constructor.
-// You can leave all of these parameters if you want to use the default values.
+// Create a new instance of the CST328 class.
+// Parameters: Width, Height, &Wire, Reset pin, Interrupt pin
 CSE_CST328 tsPanel = CSE_CST328 (240, 320, &Wire, CST328_PIN_RST, CST328_PIN_INT);
 
 //===================================================================================//
@@ -34,8 +33,9 @@ CSE_CST328 tsPanel = CSE_CST328 (240, 320, &Wire, CST328_PIN_RST, CST328_PIN_INT
 void setup() {
   Serial.begin (115200);
   delay (100);
+
   Serial.println();
-  Serial.println ("CST328 Touch Controller Test");
+  Serial.println ("== CSE_CST328: Test ==");
 
   // Set the I2C pins if your board allows it.
   // For RP2040
@@ -61,23 +61,18 @@ void loop() {
 //===================================================================================//
 
 void readTouch() {
-  tsPanel.readData();
-
-  uint8_t touches = tsPanel.getTouches();
-
-  if (touches > 0) {
-    for (uint8_t i = 0; i < touches; i++) {
-      Serial.print ("Touch ID: ");
-      Serial.print (i);
-      Serial.print (", X: ");
-      Serial.print (tsPanel.getPoint (i).x);
-      Serial.print (", Y: ");
-      Serial.print (tsPanel.getPoint (i).y);
-      Serial.print (", Z: ");
-      Serial.print (tsPanel.getPoint (i).z);
-      Serial.print (", State: ");
-      Serial.println (tsPanel.getPoint (i).state);
-    }
+  if (tsPanel.isTouched (0)) {
+    uint8_t i = 0;
+    Serial.print ("Touch ID: ");
+    Serial.print (i);
+    Serial.print (", X: ");
+    Serial.print (tsPanel.getPoint (i).x);
+    Serial.print (", Y: ");
+    Serial.print (tsPanel.getPoint (i).y);
+    Serial.print (", Z: ");
+    Serial.print (tsPanel.getPoint (i).z);
+    Serial.print (", State: ");
+    Serial.println (tsPanel.getPoint (i).state);
   }
   else {
     Serial.println ("No touches detected");

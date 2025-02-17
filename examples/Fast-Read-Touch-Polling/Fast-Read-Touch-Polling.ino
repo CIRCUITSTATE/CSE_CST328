@@ -2,10 +2,11 @@
 
 //============================================================================================//
 /*
-  Filename: Read-Touch-Polling.ino
+  Filename: Fast-Read-Touch-Polling.ino
   Description: Example Arduino sketch from the CSE_CST328 Arduino library.
   Reads the touch sensor through polling method and prints the data to the serial monitor.
-  This code was written for and tested with FireBeetle-ESP32E board.
+  This reads only one touch point at a time and therefore is faster than the `Read-Touch-Polling.ino`
+  example. This code was written for and tested with FireBeetle-ESP32E board.
   
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
@@ -13,14 +14,13 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:37:05 PM 17-02-2025, Monday
+  Last Modified: +05:30 19:37:07 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
 #include <Wire.h>
 #include <CSE_CST328.h>
 
-// Define the touch panle pins here.
 #define CST328_PIN_RST  4
 #define CST328_PIN_INT  16
 #define CST328_PIN_SDA  21
@@ -40,9 +40,9 @@ CSE_CST328 tsPanel = CSE_CST328 (240, 320, &Wire, CST328_PIN_RST, CST328_PIN_INT
 void setup() {
   Serial.begin (115200);
   delay (100);
-
+  
   Serial.println();
-  Serial.println ("== CSE_CST328: Read-Touch-Polling ==");
+  Serial.println ("CST328 Touch Controller Test");
 
   // Initialize the I2C interface (for ESP32).
   Wire.begin (CST328_PIN_SDA, CST328_PIN_SCL);
@@ -64,25 +64,23 @@ void loop() {
 
 //===================================================================================//
 /**
- * @brief Reads the touches from the panel and print their info to the serial monitor.
+ * @brief Reads a single touch point from the panel and print their info to the serial monitor.
  * 
  */
 void readTouch() {
-  uint8_t touches = tsPanel.getTouches(); // Get the number of touches currently detected.
-
-  if (touches > 0) { // If any touches are detected.
-    for (uint8_t i = 0; i < touches; i++) {
-      Serial.print ("Touch ID: ");
-      Serial.print (i);
-      Serial.print (", X: ");
-      Serial.print (tsPanel.getPoint (i).x);
-      Serial.print (", Y: ");
-      Serial.print (tsPanel.getPoint (i).y);
-      Serial.print (", Z: ");
-      Serial.print (tsPanel.getPoint (i).z);
-      Serial.print (", State: ");
-      Serial.println (tsPanel.getPoint (i).state);
-    }
+  uint8_t point = 0;
+  
+  if (tsPanel.isTouched (point)) {
+    Serial.print ("Touch ID: ");
+    Serial.print (point);
+    Serial.print (", X: ");
+    Serial.print (tsPanel.getPoint (point).x);
+    Serial.print (", Y: ");
+    Serial.print (tsPanel.getPoint (point).y);
+    Serial.print (", Z: ");
+    Serial.print (tsPanel.getPoint (point).z);
+    Serial.print (", State: ");
+    Serial.println (tsPanel.getPoint (point).state);
   }
   else {
     Serial.println ("No touches detected");

@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 21:11:18 PM 16-02-2025, Sunday
+  Last Modified: +05:30 19:26:27 PM 17-02-2025, Monday
  */
 //============================================================================================//
 
@@ -64,25 +64,28 @@ class CSE_CST328 {
     
     bool begin();
     void readData (void);
-    uint8_t getTouches (void);  // Returns the number of touches detected
-    bool isTouched (void); // Returns true if there are any touches detected
+    void fastReadData (uint8_t n = 0); // Reads only one touch point data at a time
+    uint8_t getTouches();  // Returns the number of touches detected
+    bool isTouched(); // Returns true if there are any touches detected
+    bool isTouched (uint8_t id = 0); // Returns true if there are any touches detected
     TS_Point getPoint (uint8_t n = 0);  // By default, first touch point is returned
     uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3)
     uint8_t getRotation();  // Set the rotation of the touch panel (0-3)
     uint16_t getWidth();
     uint16_t getHeight();
     
-    private:
-    TwoWire *wireInstance; // Touch panel I2C
-    int8_t pinReset;  // Touch panel reset pin
-    int8_t pinInterrupt;  // Touch panel interrupt pin
-    bool inited;
-
     // In CST328, all register addresses are 16 bits.
     void writeRegister8 (uint16_t reg, uint8_t val); // Write an 8 bit value to a register
     uint8_t readRegister8 (uint16_t reg);  // Read an 8 bit value from a register
     uint32_t readRegister32 (uint16_t reg);  // Read a 32 bit value from the registers
     void write16 (uint16_t reg);  // Write a 16 bit value to the registers. No values required.
+
+  private:
+    TwoWire *wireInstance; // Touch panel I2C
+    int8_t pinReset;  // Touch panel reset pin
+    int8_t pinInterrupt;  // Touch panel interrupt pin
+    bool inited;
+
 };
 
 //============================================================================================//
