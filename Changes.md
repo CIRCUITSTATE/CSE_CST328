@@ -1,6 +1,13 @@
 
 
 #
+### **+05:30 08:57:27 PM 18-02-2025, Tuesday**
+
+  - Updated constants file.
+  - Updated all macro instances.
+  - Updated Readme.
+
+#
 ### **+05:30 11:29:05 PM 17-02-2025, Monday**
 
   - Added new `Read-Touch-Interrupt.ino` example.

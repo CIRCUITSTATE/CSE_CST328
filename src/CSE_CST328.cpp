@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 22:46:32 PM 17-02-2025, Monday
+  Last Modified: +05:30 20:57:17 PM 18-02-2025, Tuesday
  */
 //============================================================================================//
 
@@ -140,10 +140,10 @@ bool CSE_CST328:: begin() {
   for (int i = 0; i < 3; i++) {
     // Enable debug mode to read the chip information.
     // In normal mode, reading the chip info will not work.
-    write16 (MODE_DEBUG_INFO_REG);
+    write16 (REG_MODE_DEBUG_INFO);
 
     // Read the firmware checksum. Shoule be 0xCACAxxxx.
-    uint32_t id = readRegister32 (CST328_INFO_3_REG);
+    uint32_t id = readRegister32 (REG_CST328_INFO_3);
     // The high bytes 3 and 2 should be 0xCACA. Extract the bytes.
     uint32_t fw_vc = (id >> 16) & 0xFFFF; // Firmware version code
     
@@ -161,7 +161,7 @@ bool CSE_CST328:: begin() {
   }
 
   // Put the device in normal reporting mode.
-  write16 (MODE_NORMAL_REG);
+  write16 (REG_MODE_NORMAL);
   
   return true;
 }
@@ -175,12 +175,12 @@ void CSE_CST328:: readData() {
   uint8_t data [27]; // Buffer for all touch registers (0xD000-0xD01A)
   
   // Read all data registers at once for efficiency.
-  wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-  wireInstance->write (0xD0);
-  wireInstance->write (0x00);
+  wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+  wireInstance->write (REG_TOUCH_INFO);
+  wireInstance->write (REG_FINGER_1_ID);
   wireInstance->endTransmission (false);
   
-  wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 27);
+  wireInstance->requestFrom (CTS328_I2C_ADDRESS, 27);
   
   uint8_t i = 0;
 
@@ -255,12 +255,12 @@ void CSE_CST328:: fastReadData (uint8_t id) {
   switch (id) {
     case 0: // Finger 1 (id 0)
     default: // Default to finger 1
-      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-      wireInstance->write (0xD0); // Register address for first finger.
-      wireInstance->write (0x00);
+      wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+      wireInstance->write (REG_TOUCH_INFO); 
+      wireInstance->write (REG_FINGER_1_ID); // Register address for first finger.
       wireInstance->endTransmission (false);
 
-      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+      wireInstance->requestFrom (CTS328_I2C_ADDRESS, 5);
 
       for (int i = 0; i < 5; i++) {
         if (wireInstance->available()) {
@@ -273,12 +273,12 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
 
     case 1:
-      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-      wireInstance->write (0xD0); // Register address for second finger.
-      wireInstance->write (0x07);
+      wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+      wireInstance->write (REG_TOUCH_INFO); // Register address for second finger.
+      wireInstance->write (REG_FINGER_2_ID);
       wireInstance->endTransmission (false);
 
-      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+      wireInstance->requestFrom (CTS328_I2C_ADDRESS, 5);
 
       for (int i = 0; i < 5; i++) {
         if (wireInstance->available()) {
@@ -291,12 +291,12 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
 
     case 2:
-      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-      wireInstance->write (0xD0); // Register address for third finger.
-      wireInstance->write (0x0C);
+      wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+      wireInstance->write (REG_TOUCH_INFO); // Register address for third finger.
+      wireInstance->write (REG_FINGER_3_ID);
       wireInstance->endTransmission (false);
 
-      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+      wireInstance->requestFrom (CTS328_I2C_ADDRESS, 5);
 
       for (int i = 0; i < 5; i++) {
         if (wireInstance->available()) {
@@ -309,12 +309,12 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
 
     case 3:
-      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-      wireInstance->write (0xD0); // Register address for fourth finger.
-      wireInstance->write (0x11);
+      wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+      wireInstance->write (REG_TOUCH_INFO); // Register address for fourth finger.
+      wireInstance->write (REG_FINGER_4_ID);
       wireInstance->endTransmission (false);
 
-      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+      wireInstance->requestFrom (CTS328_I2C_ADDRESS, 5);
 
       for (int i = 0; i < 5; i++) {
         if (wireInstance->available()) {
@@ -327,12 +327,12 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
 
     case 4:
-      wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
-      wireInstance->write (0xD0); // Register address for fifth finger.
-      wireInstance->write (0x16);
+      wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
+      wireInstance->write (REG_TOUCH_INFO); // Register address for fifth finger.
+      wireInstance->write (REG_FINGER_5_ID);
       wireInstance->endTransmission (false);
 
-      wireInstance->requestFrom (CTS328_SLAVE_ADDRESS, 5);
+      wireInstance->requestFrom (CTS328_I2C_ADDRESS, 5);
 
       for (int i = 0; i < 5; i++) {
         if (wireInstance->available()) {
@@ -501,7 +501,7 @@ uint16_t CSE_CST328:: getHeight() {
  * @param val Value to write.
  */
 void CSE_CST328:: writeRegister8 (uint16_t reg, uint8_t val) {
-  wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+  wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
   wireInstance->write (byte (reg >> 8));
   wireInstance->write (byte (reg & 0xFF));
   wireInstance->write (byte (val));
@@ -517,7 +517,7 @@ void CSE_CST328:: writeRegister8 (uint16_t reg, uint8_t val) {
  * @param reg The 16-bit register address.
  */
 void CSE_CST328:: write16 (uint16_t reg) {
-  wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+  wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
   wireInstance->write (byte (reg >> 8));
   wireInstance->write (byte (reg & 0xFF));
   wireInstance->endTransmission();
@@ -533,13 +533,13 @@ void CSE_CST328:: write16 (uint16_t reg) {
 uint8_t CSE_CST328:: readRegister8 (uint16_t reg) {
   uint8_t value;
 
-  wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+  wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
   // Write high byte first.
   wireInstance->write (byte (reg >> 8));
   wireInstance->write (byte (reg & 0xFF));
   wireInstance->endTransmission();
 
-  wireInstance->requestFrom (byte (CTS328_SLAVE_ADDRESS), byte (1));
+  wireInstance->requestFrom (byte (CTS328_I2C_ADDRESS), byte (1));
 
   if (wireInstance->available()) {
     value = wireInstance->read();
@@ -559,12 +559,12 @@ uint32_t CSE_CST328:: readRegister32 (uint16_t reg) {
   uint32_t value;
   uint8_t buffer [4] = {0, 0, 0, 0};
 
-  wireInstance->beginTransmission (CTS328_SLAVE_ADDRESS);
+  wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
   wireInstance->write (byte (reg >> 8));  // Write high byte first.
   wireInstance->write (byte (reg & 0xFF));
   wireInstance->endTransmission();
 
-  wireInstance->requestFrom (byte (CTS328_SLAVE_ADDRESS), byte (4));
+  wireInstance->requestFrom (byte (CTS328_I2C_ADDRESS), byte (4));
 
   wireInstance->readBytes (buffer, 4);
   // Combine the bytes.
