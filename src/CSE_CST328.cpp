@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 20:57:17 PM 18-02-2025, Tuesday
+  Last Modified: +05:30 21:04:21 PM 18-02-2025, Tuesday
  */
 //============================================================================================//
 
@@ -148,13 +148,13 @@ bool CSE_CST328:: begin() {
     uint32_t fw_vc = (id >> 16) & 0xFFFF; // Firmware version code
     
     if (fw_vc == 0xCACA) {
-      // Serial.println ("CST328 is found on the bus.");
-      // Serial.println (id, HEX);
+      // DEBUG_SERIAL.println ("CST328 is found on the bus.");
+      // DEBUG_SERIAL.println (id, HEX);
       break;
     }
     else {
       if (i == 2) {
-        // Serial.println ("CST328 not found on the bus.");
+        // DEBUG_SERIAL.println ("CST328 not found on the bus.");
         return false;
       }
     }
@@ -194,7 +194,7 @@ void CSE_CST328:: readData() {
   }
 
   if (i < 27) {
-    Serial.println ("readData [WARNING]: Not all registers were read.");
+    // DEBUG_SERIAL.println ("readData [WARNING]: Not all registers were read.");
   }
   
   // touches = data [5] & 0x0F; // Get number of touches reported

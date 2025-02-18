@@ -9,7 +9,7 @@
   Version: 0.1
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 20:42:29 PM 18-02-2025, Tuesday
+  Last Modified: +05:30 22:03:04 PM 18-02-2025, Tuesday
  */
 //============================================================================================//
 
@@ -20,7 +20,7 @@
 #include <Wire.h>
 #include "CSE_CST328_Constants.h"
 
-#define debugSerial Serial  // Select the serial port to use for debug output
+#define DEBUG_SERIAL Serial  // Select the serial port to use for debug output
 
 //============================================================================================//
 /*!

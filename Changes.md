@@ -1,6 +1,11 @@
 
 
 #
+### **+05:30 10:02:38 PM 18-02-2025, Tuesday**
+
+  - Added [API](/docs/API.md) documentation.
+
+#
 ### **+05:30 08:57:27 PM 18-02-2025, Tuesday**
 
   - Updated constants file.
