@@ -9,10 +9,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.1
+  Version: 0.0.2
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 20:57:04 PM 18-02-2025, Tuesday
+  Last Modified: +05:30 19:32:17 PM 19-02-2025, Wednesday
  */
 //============================================================================================//
 
@@ -228,3 +228,5 @@
   BIT 7 ~ BIT 0: 5th finger pressure value
  */
 #define REG_FINGER_5_Z              (uint8_t(0x1A))
+
+#endif

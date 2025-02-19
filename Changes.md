@@ -1,6 +1,13 @@
 
 
 #
+### **+05:30 07:32:44 PM 19-02-2025, Wednesday**
+
+  - Fixed semantic versioning issue.
+  - Fixed missing `#endif` from `CSE_CST328_Constants.h`.
+  - New Version 🆕 `v0.0.2`.
+
+#
 ### **+05:30 10:02:38 PM 18-02-2025, Tuesday**
 
   - Added [API](/docs/API.md) documentation.
@@ -57,4 +64,4 @@
 
   - Reading multiple touch points working.
   - Initial commit.
-  - New Version `v0.1`.
+  - New Version 🆕 `v0.1`.
