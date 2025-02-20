@@ -6,10 +6,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.0.2
+  Version: 0.0.3
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:32:12 PM 19-02-2025, Wednesday
+  Last Modified: +05:30 23:35:54 PM 20-02-2025, Thursday
  */
 //============================================================================================//
 
@@ -345,35 +345,29 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
   }
   
+  TS_Point point;
   touchPoints [id].state = ((data [0] & 0x0F) == 6) ? 1 : 0;
-  touchPoints [id].x = (data [1] << 4) | ((data [3] >> 4) & 0x0F); // Calculate X coordinate (combining high and low bits)
-  touchPoints [id].y = (data [2] << 4) | (data [3] & 0x0F); // Calculate Y coordinate (combining high and low bits)
-  touchPoints [id].z = data [4]; // Touch weight/pressure
+  point.x = (data [1] << 4) | ((data [3] >> 4) & 0x0F); // Calculate X coordinate (combining high and low bits)
+  point.y = (data [2] << 4) | (data [3] & 0x0F); // Calculate Y coordinate (combining high and low bits)
+  point.z = data [4]; // Touch weight/pressure
   
   // Apply rotation if necessary.
   switch (rotation) {
-    case 0: // Default orientation
+    case 0:
+      touchPoints [id].x = point.x;
+      touchPoints [id].y = point.y;
       break;
-
-    case 1: // 90 degrees clockwise
-      {
-        int16_t temp = touchPoints [id].y;
-        touchPoints [id].y = width - touchPoints [id].x - 1;
-        touchPoints [id].x = temp;
-      }
+    case 1:
+      touchPoints [id].x = point.y;
+      touchPoints [id].y = height - point.x; // Mirror X
       break;
-
-    case 2: // 180 degrees
-      touchPoints [id].x = width - touchPoints [id].x - 1;
-      touchPoints [id].y = height - touchPoints [id].y - 1;
+    case 2:
+      touchPoints [id].x = width - point.x; // Mirror X
+      touchPoints [id].y = height - point.y; // Mirror Y
       break;
-      
-    case 3: // 270 degrees clockwise
-      {
-        int16_t temp = touchPoints [id].y;
-        touchPoints [id].y = touchPoints [id].x;
-        touchPoints [id].x = height - temp - 1;
-      }
+    case 3:
+      touchPoints [id].x = width - point.y; // Mirror Y
+      touchPoints [id].y = point.x;
       break;
   }
 }
@@ -390,7 +384,7 @@ uint8_t CSE_CST328:: getTouches() {
   
   uint8_t touches = 0;
 
-  for (uint8_t i = 0; i < 5; i++) { // Finc the number of active touches.
+  for (uint8_t i = 0; i < 5; i++) { // Find the number of active touches.
     if (touchPoints [i].state == 1) {
       touches++;
     }
@@ -429,7 +423,7 @@ bool CSE_CST328:: isTouched() {
 /**
  * @brief Get the coordinates of a touch point.
  * 
- * @param n Touch point to get (0 or 1, default 0).
+ * @param n Touch point to get (0~4). Default is 0.
  * @return `TS_Point` TS_Point object with x, y, and z coordinates.
  */
 TS_Point CSE_CST328:: getPoint (uint8_t n) {

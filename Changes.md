@@ -1,6 +1,13 @@
 
 
 #
+### **+05:30 11:33:35 PM 20-02-2025, Thursday**
+
+  - Fixed touch panel rotation issue.
+    - Previously the coordinates were rotated incorrectly.
+  - New Version 🆕 `v0.0.3`.
+
+#
 ### **+05:30 07:32:44 PM 19-02-2025, Wednesday**
 
   - Fixed semantic versioning issue.

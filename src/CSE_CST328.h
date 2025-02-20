@@ -6,10 +6,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.0.2
+  Version: 0.0.3
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 19:32:03 PM 19-02-2025, Wednesday
+  Last Modified: +05:30 23:35:49 PM 20-02-2025, Thursday
  */
 //============================================================================================//
 
