@@ -9,67 +9,67 @@
   Version: 0.0.3
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 23:35:54 PM 20-02-2025, Thursday
+  Last Modified: +05:30 15:19:39 PM 01-03-2025, Saturday
  */
 //============================================================================================//
 
 #include "CSE_CST328.h"
 
-//============================================================================================//
-/**
- * @brief Constructor for a point with no arguments.
- * 
- * @return `TS_Point::` The object.
- */
-TS_Point:: TS_Point (void) {
-  x = 0;
-  y = 0;
-  z = 0;
-  touchId = 0;
-  state = 0;
-}
+// //============================================================================================//
+// /**
+//  * @brief Constructor for a point with no arguments.
+//  * 
+//  * @return `TS_Point::` The object.
+//  */
+// TS_Point:: TS_Point (void) {
+//   x = 0;
+//   y = 0;
+//   z = 0;
+//   touchId = 0;
+//   state = 0;
+// }
 
-//============================================================================================//
-/**
- * @brief Constructor for a point with arguments for x, y, and z.
- * 
- * @param x X coordinate.
- * @param y Y coordinate.
- * @param z Z coordinate (often used for pressure).
- * @param id Touch ID.
- * @return `TS_Point::` The object.
- */
-TS_Point:: TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id) {
-  this->x = x;
-  this->y = y;
-  this->z = z;
-  this->touchId = id;
-  state = 0;
-}
+// //============================================================================================//
+// /**
+//  * @brief Constructor for a point with arguments for x, y, and z.
+//  * 
+//  * @param x X coordinate.
+//  * @param y Y coordinate.
+//  * @param z Z coordinate (often used for pressure).
+//  * @param id Touch ID.
+//  * @return `TS_Point::` The object.
+//  */
+// TS_Point:: TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id) {
+//   this->x = x;
+//   this->y = y;
+//   this->z = z;
+//   this->touchId = id;
+//   state = 0;
+// }
 
-//============================================================================================//
-/**
- * @brief Compare two points for equality. The z coordinate is ignored.
- * 
- * @param p Point to compare.
- * @return `true` If equal.
- * @return `false` If not equal.
- */
-bool TS_Point:: operator== (TS_Point p) {
-  return ((p.x == x) && (p.y == y));
-}
+// //============================================================================================//
+// /**
+//  * @brief Compare two points for equality. The z coordinate is ignored.
+//  * 
+//  * @param p Point to compare.
+//  * @return `true` If equal.
+//  * @return `false` If not equal.
+//  */
+// bool TS_Point:: operator== (TS_Point p) {
+//   return ((p.x == x) && (p.y == y));
+// }
 
-//============================================================================================//
-/**
- * @brief Compare two points for inequality. The z coordinate is ignored.
- * 
- * @param p Point to compare.
- * @return `true` If not equal.
- * @return `false` If equal.
- */
-bool TS_Point:: operator!= (TS_Point p) {
-  return ((p.x != x) || (p.y != y));
-}
+// //============================================================================================//
+// /**
+//  * @brief Compare two points for inequality. The z coordinate is ignored.
+//  * 
+//  * @param p Point to compare.
+//  * @return `true` If not equal.
+//  * @return `false` If equal.
+//  */
+// bool TS_Point:: operator!= (TS_Point p) {
+//   return ((p.x != x) || (p.y != y));
+// }
 
 //============================================================================================//
 /**
@@ -98,7 +98,7 @@ CSE_CST328:: CSE_CST328 (uint16_t width, uint16_t height, TwoWire *i2c, int8_t p
   
   // Initialize the touch points.
   for (int i = 0; i < 5; i++) {
-    touchPoints [i] = TS_Point (0, 0, 0, i);
+    touchPoints [i] = CSE_TouchPoint (0, 0, 0, i);
   }
   
   // Initialize other variables.
@@ -345,7 +345,7 @@ void CSE_CST328:: fastReadData (uint8_t id) {
       break;
   }
   
-  TS_Point point;
+  CSE_TouchPoint point;
   touchPoints [id].state = ((data [0] & 0x0F) == 6) ? 1 : 0;
   point.x = (data [1] << 4) | ((data [3] >> 4) & 0x0F); // Calculate X coordinate (combining high and low bits)
   point.y = (data [2] << 4) | (data [3] & 0x0F); // Calculate Y coordinate (combining high and low bits)
@@ -426,7 +426,7 @@ bool CSE_CST328:: isTouched() {
  * @param n Touch point to get (0~4). Default is 0.
  * @return `TS_Point` TS_Point object with x, y, and z coordinates.
  */
-TS_Point CSE_CST328:: getPoint (uint8_t n) {
+CSE_TouchPoint CSE_CST328:: getPoint (uint8_t n) {
   return touchPoints [n];
 }
 

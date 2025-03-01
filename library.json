@@ -2,7 +2,7 @@
     "name": "CSE_CST328",
     "keywords": "display",
     "description": "Arduino library for CST328-based capacitive touch panels.",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license": "MIT",
     "repository":
     {

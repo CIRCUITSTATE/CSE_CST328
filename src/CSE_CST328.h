@@ -9,7 +9,7 @@
   Version: 0.0.3
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 23:35:49 PM 20-02-2025, Thursday
+  Last Modified: +05:30 15:17:53 PM 01-03-2025, Saturday
  */
 //============================================================================================//
 
@@ -19,33 +19,34 @@
 #include "Arduino.h"
 #include <Wire.h>
 #include "CSE_CST328_Constants.h"
+#include "CSE_Touch.h"
 
 #define DEBUG_SERIAL Serial  // Select the serial port to use for debug output
 
-//============================================================================================//
-/*!
-  @brief  Helper class that stores a touch screen point with x, y, and z
-  coordinates, for easy math/comparison.
-*/
-class TS_Point {
-  public:
-    TS_Point (void);
-    TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id);
+// //============================================================================================//
+// /*!
+//   @brief  Helper class that stores a touch screen point with x, y, and z
+//   coordinates, for easy math/comparison.
+// */
+// class TS_Point {
+//   public:
+//     TS_Point (void);
+//     TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id);
 
-    // Comparison operators.
-    bool operator== (TS_Point);
-    bool operator!= (TS_Point);
+//     // Comparison operators.
+//     bool operator== (TS_Point);
+//     bool operator!= (TS_Point);
 
-    // In touch panels that have multi-touch support, the touch ID can be used
-    // to identify the touch point.
-    // CST328 supports up to 5 touch points.
-    uint8_t touchId;
+//     // In touch panels that have multi-touch support, the touch ID can be used
+//     // to identify the touch point.
+//     // CST328 supports up to 5 touch points.
+//     uint8_t touchId;
     
-    int16_t x; // X coordinate
-    int16_t y; // Y coordinate
-    int16_t z; // Z coordinate (often used for pressure)
-    int16_t state; // State (touched or not touched)
-};
+//     int16_t x; // X coordinate
+//     int16_t y; // Y coordinate
+//     int16_t z; // Z coordinate (often used for pressure)
+//     int16_t state; // State (touched or not touched)
+// };
 
 //============================================================================================//
 /*!
@@ -58,7 +59,7 @@ class CSE_CST328 {
     uint16_t width, height; // The size of the touch screen
     uint8_t rotation;
 
-    TS_Point touchPoints [5];
+    CSE_TouchPoint touchPoints [5];
 
     CSE_CST328 (uint16_t width, uint16_t height, TwoWire *i2c = &Wire, int8_t pinRst = -1, int8_t pinIrq = -1);
     
@@ -68,7 +69,7 @@ class CSE_CST328 {
     uint8_t getTouches();  // Returns the number of touches detected
     bool isTouched(); // Returns true if there are any touches detected
     bool isTouched (uint8_t id); // Returns true if there are any touches detected
-    TS_Point getPoint (uint8_t n = 0);  // By default, first touch point is returned
+    CSE_TouchPoint getPoint (uint8_t n = 0);  // By default, first touch point is returned
     uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3)
     uint8_t getRotation();  // Set the rotation of the touch panel (0-3)
     uint16_t getWidth();

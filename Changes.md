@@ -1,6 +1,18 @@
 
 
 #
+### **+05:30 03:21:25 PM 01-03-2025, Saturday**
+
+  - Updated the library naming string in Arduino library properties.
+  - Removed the `TS_Point` class.
+    - This was redundant and was causing conflicts with the `CSE_TouchPoint` class.
+    - This also caused the touch issue in the `UI_Test` example.
+    - Replaced all `TS_Point` instances with `CSE_TouchPoint`.
+    - We will now use the `CSE_TouchPoint` class instead, everywhere.
+    - The commented out lines will be removed in the next version.
+  - New Version 🆕 `v0.0.4`.
+
+#
 ### **+05:30 11:33:35 PM 20-02-2025, Thursday**
 
   - Fixed touch panel rotation issue.
