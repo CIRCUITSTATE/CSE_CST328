@@ -1,6 +1,11 @@
 
 
 #
+### **+05:30 03:33:06 PM 01-03-2025, Saturday**
+
+  - Removed commented out code.
+
+#
 ### **+05:30 03:21:25 PM 01-03-2025, Saturday**
 
   - Updated the library naming string in Arduino library properties.
