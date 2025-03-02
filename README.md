@@ -23,7 +23,9 @@ The library can also be installed via [**PlatformIO**](https://platformio.org). 
 
 ## Dependencies
 
-This library does not depend on any other libraries other than the standard Arduino libraries including [**Wire**](https://github.com/arduino-libraries/Wire).
+This library depends on the following libraries:
+
+- [**CSE_Touch**](https://github.com/CIRCUITSTATE/CSE_Touch) - Unified touch controller library for Arduino.
 
 ## Example
 
@@ -40,6 +42,7 @@ Please see the [API.md](/docs/API.md) file for the API reference.
 ## References
 
 -  [**CSE_UI - CIRCUITSTATE GitHub**](https://github.com/CIRCUITSTATE/CSE_UI) - An Arduino GUI library for common TFT/IPS screens.
+-  [**CSE_Touch - CIRCUITSTATE GitHub**](https://github.com/CIRCUITSTATE/CSE_Touch) - Unified touch controller library for Arduino.
 -  [**Adafruit_FT6206 Library**](https://github.com/adafruit/Adafruit_FT6206_Library) - Where this library took inspiration from.
 -  [**TouchLib**](https://github.com/mmMicky/TouchLib/tree/main) - An alternate library for the CST328.
 -  [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD)
