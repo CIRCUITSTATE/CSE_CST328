@@ -10,11 +10,8 @@ Version 0.1, +05:30 09:01:36 PM 18-02-2025, Tuesday
   - [Configuration](#configuration)
   - [Constants](#constants)
   - [Classes](#classes)
-  - [Class `TS_Point`](#class-ts_point)
-    - [Variables](#variables)
-    - [`TS_Point()`](#ts_point)
   - [Class `CSE_CST328`](#class-cse_cst328)
-    - [Variables](#variables-1)
+    - [Variables](#variables)
     - [`CSE_CST328()`](#cse_cst328)
     - [`begin()`](#begin)
     - [`readData()`](#readdata)
@@ -34,7 +31,7 @@ Version 0.1, +05:30 09:01:36 PM 18-02-2025, Tuesday
 
 ## Dependencies
 
-- None
+- [**CSE_Touch**](https://github.com/CIRCUITSTATE/CSE_Touch) - Unified touch controller library for Arduino.
 
 ## Configuration
 
@@ -47,61 +44,6 @@ All of the constants are defined in the [`CSE_CST328_Constants.h`](../src/CSE_CS
 ## Classes
 
 - `CSE_CST328` - The main class for wrapping the data and functions of the library.
-- `TS_Point` - A class to store touch points.
-
-## Class `TS_Point`
-
-### Variables
-
-#### Public
-
-- `uint8_t touchId` : ID of the touch point. Initializes to `0`.
-- `int16_t x` : X coordinate. Initializes to `0`.
-- `int16_t y` : Y coordinate. Initializes to `0`.
-- `int16_t z` : Z coordinate. Often used for indicating pressure. Initializes to `0`.
-- `uint8_t state` : State of the touch point (touched = 1, not touched = 0). Initializes to `0`.
-
-### `TS_Point()`
-
-Constructor for the `TS_Point` class. There are two overloads.
-
-- `TS_Point()` : Initializes all variables to `0`.
-- `TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id)` : Initializes all variables.
-
-#### Syntax 1
-
-```cpp
-TS_Point (void);
-```
-
-Initializes all variables to `0`.
-
-##### Parameters
-
-- None
-
-##### Returns
-
-- `TS_Point` object.
-
-#### Syntax 2
-
-```cpp
-TS_Point (int16_t x, int16_t y, int16_t z, uint8_t id);
-```
-
-Accepts 4 initial parameters.
-
-##### Parameters
-
-- `x` : X coordinate.
-- `y` : Y coordinate.
-- `z` : Z coordinate.
-- `id` : Unique finger ID for the point.
-
-##### Returns
-
-- `TS_Point` object.
 
 ## Class `CSE_CST328`
 
@@ -114,7 +56,7 @@ Accepts 4 initial parameters.
 - `uint16_t width` - Current width of the screen.
 - `uint16_t height` - Current height of the screen.
 - `uint8_t rotation` - Current rotation of the screen.
-- `TS_Point touchPoints [5]` - Array of 5 touch points.
+- `CSE_TouchPoint touchPoints [5]` - Array of 5 touch points.
 
 #### Private
 
@@ -266,7 +208,7 @@ Returns the coordinates of the touch point. You need to send the finger ID to ge
 #### Syntax
 
 ```cpp
-TS_Point getPoint (uint8_t id = 0);
+CSE_TouchPoint getPoint (uint8_t id = 0);
 ```
 
 ##### Parameters
@@ -275,7 +217,7 @@ TS_Point getPoint (uint8_t id = 0);
 
 ##### Returns
 
-- `TS_Point` object.
+- `CSE_TouchPoint` object.
 
 ### `setRotation()`
 

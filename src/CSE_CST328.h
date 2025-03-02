@@ -6,10 +6,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.0.3
+  Version: 0.0.4
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 15:31:36 PM 01-03-2025, Saturday
+  Last Modified: +05:30 12:38:17 PM 02-03-2025, Sunday
  */
 //============================================================================================//
 
@@ -19,7 +19,7 @@
 #include "Arduino.h"
 #include <Wire.h>
 #include "CSE_CST328_Constants.h"
-#include "CSE_Touch.h"
+#include <CSE_Touch.h>
 
 #define DEBUG_SERIAL Serial  // Select the serial port to use for debug output
 
