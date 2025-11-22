@@ -21,6 +21,14 @@
         "maintainer": true
       }
     ],
+    "dependencies":
+    [
+        {
+          "owner": "CIRCUITSTATE",
+          "name": "CSE_Touch",
+          "version": "https://github.com/CIRCUITSTATE/CSE_Touch.git"
+        }
+    ],
     "frameworks": "arduino",
     "platforms": "*"
 }
