@@ -3,7 +3,7 @@
 
 # CSE_CST328
 
-**CSE_CST328** is an Arduino library from [*CIRCUITSTATE Electronics*](https://www.circuitstate.com/). It helps you interface the [**CST328**](https://www.cdtech-display.com/wp-content/uploads/2024/07/CST328-DataSheet-V2.2.pdf) touch controller with your Arduino boards. CST328 can be bought as a standalone touch panel or come integrated with LCD screens like the [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD). The library uses I2C to communicate with the CST328.
+**CSE_CST328** is an Arduino library from [*CIRCUITSTATE Electronics*](https://www.circuitstate.com/). It helps you interface the [**CST328**](https://www.cdtech-display.com/wp-content/uploads/2024/07/CST328-DataSheet-V2.2.pdf) touch controller with your Arduino boards. CST328 can be bought as a standalone touch panel or comes integrated with LCD screens like the [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD). The library uses I2C to communicate with the CST328. CIRCUITSTATE has a tutorial on an LCD display that uses the CST328 touch controller - [Interfacing Waveshare 2.8 Inch Capacitive Touch LCD with Arduino](https://www.circuitstate.com/tutorials/interfacing-waveshare-2-8-inch-capacitive-touch-lcd-with-arduino/).
 
 ## Installation
 
@@ -46,3 +46,4 @@ Please see the [API.md](/docs/API.md) file for the API reference.
 -  [**Adafruit_FT6206 Library**](https://github.com/adafruit/Adafruit_FT6206_Library) - Where this library took inspiration from.
 -  [**TouchLib**](https://github.com/mmMicky/TouchLib/tree/main) - An alternate library for the CST328.
 -  [**Waveshare 2.8" Capacitive Touch LCD**](https://www.waveshare.com/wiki/2.8inch_Capacitive_Touch_LCD)
+-  [**Interfacing Waveshare 2.8 Inch Capacitive Touch LCD with Arduino - CIRCUITSTATE**](https://www.circuitstate.com/tutorials/interfacing-waveshare-2-8-inch-capacitive-touch-lcd-with-arduino/)

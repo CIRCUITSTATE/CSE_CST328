@@ -1,4 +1,13 @@
 
+# Changes
+
+#
+### **+05:30 02:13:01 PM 22-02-2026, Sunday**
+
+  - Fixed variables being not initialized in multiple functions inside `CSE_CST328.cpp`.
+    - Fixed Issue [#2](https://github.com/CIRCUITSTATE/CSE_CST328/issues/2).
+  - Updated Readme.
+  - New Version 🆕 `v0.0.5`.
 
 #
 ### **+05:30 12:43:17 PM 02-03-2025, Sunday**

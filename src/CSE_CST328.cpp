@@ -6,10 +6,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.0.4
+  Version: 0.0.5
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 12:34:36 PM 02-03-2025, Sunday
+  Last Modified: +05:30 14:14:13 PM 22-02-2026, Sunday
  */
 //============================================================================================//
 
@@ -116,15 +116,15 @@ bool CSE_CST328:: begin() {
  * 
  */
 void CSE_CST328:: readData() {
-  uint8_t data [27]; // Buffer for all touch registers (0xD000-0xD01A)
+  uint8_t data [27] = {0}; // Buffer for all touch registers (0xD000-0xD01A)
   
   // Read all data registers at once for efficiency.
   wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
-  wireInstance->write (REG_TOUCH_INFO);
-  wireInstance->write (REG_FINGER_1_ID);
+  wireInstance->write (byte (REG_TOUCH_INFO));
+  wireInstance->write (byte (REG_FINGER_1_ID));
   wireInstance->endTransmission (false);
   
-  wireInstance->requestFrom (CTS328_I2C_ADDRESS, 27);
+  wireInstance->requestFrom (byte (CTS328_I2C_ADDRESS), 27);
   
   uint8_t i = 0;
 
@@ -160,7 +160,7 @@ void CSE_CST328:: readData() {
     dataIndex += 5; // Increment by 5 to move to next finger.
   }
   
-  // // Apply rotation if necessary
+  // Apply rotation if necessary
   for (uint8_t i = 0; i < 5; i++) {
     switch (rotation) {
       case 0: // Default orientation
@@ -194,7 +194,7 @@ void CSE_CST328:: readData() {
  * @param id Touch or finger ID (0-4).
  */
 void CSE_CST328:: fastReadData (uint8_t id) {
-  uint8_t data [5]; // Buffer for data for one finger.
+  uint8_t data [5] = {0}; // Buffer for data for one finger.
   
   switch (id) {
     case 0: // Finger 1 (id 0)
@@ -359,7 +359,7 @@ bool CSE_CST328:: isTouched (uint8_t id) {
  * @brief Check if the screen is being touched by checking all touch points.
  * @returns  True if touched, false if not.
  */
-bool CSE_CST328:: isTouched() {
+bool CSE_CST328:: isTouched (void) {
   return (getTouches() > 0);
 }
 
@@ -469,7 +469,7 @@ void CSE_CST328:: write16 (uint16_t reg) {
  * @return `uint8_t` Value read from register.
  */
 uint8_t CSE_CST328:: readRegister8 (uint16_t reg) {
-  uint8_t value;
+  uint8_t value = 0;
 
   wireInstance->beginTransmission (CTS328_I2C_ADDRESS);
   // Write high byte first.
@@ -494,7 +494,7 @@ uint8_t CSE_CST328:: readRegister8 (uint16_t reg) {
  * @return `uint32_t` The four bytes combined into a 32-bit value.
  */
 uint32_t CSE_CST328:: readRegister32 (uint16_t reg) {
-  uint32_t value;
+  uint32_t value = 0;
   uint8_t buffer [4] = {0, 0, 0, 0};
 
   wireInstance->beginTransmission (CTS328_I2C_ADDRESS);

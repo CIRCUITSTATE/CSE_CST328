@@ -6,10 +6,10 @@
   Framework: Arduino, PlatformIO
   Author: Vishnu Mohanan (@vishnumaiea, @vizmohanan)
   Maintainer: CIRCUITSTATE Electronics (@circuitstate)
-  Version: 0.0.4
+  Version: 0.0.5
   License: MIT
   Source: https://github.com/CIRCUITSTATE/CSE_CST328
-  Last Modified: +05:30 12:38:17 PM 02-03-2025, Sunday
+  Last Modified: +05:30 14:14:11 PM 22-02-2026, Sunday
  */
 //============================================================================================//
 
@@ -40,12 +40,12 @@ class CSE_CST328 {
     
     bool begin();
     void readData (void);
-    void fastReadData (uint8_t n = 0); // Reads only one touch point data at a time
+    void fastReadData (uint8_t id = 0); // Reads only one touch point data at a time
     uint8_t getTouches();  // Returns the number of touches detected
     bool isTouched(); // Returns true if there are any touches detected
     bool isTouched (uint8_t id); // Returns true if there are any touches detected
     CSE_TouchPoint getPoint (uint8_t n = 0);  // By default, first touch point is returned
-    uint8_t setRotation (uint8_t rotation = 0);  // Set the rotation of the touch panel (0-3)
+    uint8_t setRotation (uint8_t r = 0);  // Set the rotation of the touch panel (0-3)
     uint8_t getRotation();  // Set the rotation of the touch panel (0-3)
     uint16_t getWidth();
     uint16_t getHeight();
